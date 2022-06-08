@@ -87,7 +87,7 @@ deployment.apps/hello-world-deployment created
 service/hello-world-service created
 ```
 
-**2.** Note that we are not generating a public IP address for the "Hello, world!" `Service`. Check that its `EXTERNAL-IP` is `<none>`.
+**2.** Note that we are not generating a public IP address for the "Hello, world!" `Service`. Check that its `EXTERNAL-IP` is `<none>`:
 
 ```bash
 kubectl get service hello-world-service
