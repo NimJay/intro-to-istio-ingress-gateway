@@ -7,7 +7,7 @@ Note that the "i" in "ingress" is lower case. This is because we want to make it
 
 ## It's "gateway", not "Gateway"
 
-Similarly, we use a lower case "g" in "gateway" to make it clear that we're not referring to the Istio [`Gateway`](https://istio.io/latest/docs/reference/config/networking/gateway/) object or the Kubernetes [`Gateway`](https://gateway-api.sigs.k8s.io/) object.
+Similarly, we use a lower case "g" in "gateway" to make it clear that we're **not** referring to the Istio [`Gateway`](https://istio.io/latest/docs/reference/config/networking/gateway/) object or the Kubernetes [`Gateway`](https://gateway-api.sigs.k8s.io/) object.
 
 ## Set up Istio and its ingress gateway
 
@@ -74,7 +74,7 @@ Type:                     LoadBalancer
 
 ## Deploy a "Hello, world!" app
 
-**1.** Deploy the "Hello, world!" app.
+**1.** Deploy the "Hello, world!" app:
 
 ```bash
 kubectl apply -f deployment.yaml
