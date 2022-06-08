@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world-service
+spec:
+  # We're using Google Cloud's external load balancer.
+  # This will generate a public IP address.
+  type: LoadBalancer
+  # Select the Pods that make up this Service.
+  selector:
+    pods-label: hello-world-pods
+  ports:
+  - port: 80
+    targetPort: 8080
