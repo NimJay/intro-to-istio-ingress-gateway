@@ -6,12 +6,12 @@ spec:
   # Select the Pods that make up this Deployment.
   selector:
     matchLabels:
-      pods-label: hello-world-pods
+      pod-label: hello-world-pod
   # Define the Pod.
   template:
     metadata:
       labels:
-        pods-label: hello-world-pods
+        pod-label: hello-world-pod
     spec:
       containers:
       - name: hello-world-container

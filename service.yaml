@@ -5,7 +5,7 @@ metadata:
 spec:
   # Select the Pods that make up this Service.
   selector:
-    pods-label: hello-world-pods
+    pod-label: hello-world-pod
   ports:
   - port: 80
     targetPort: 8080
