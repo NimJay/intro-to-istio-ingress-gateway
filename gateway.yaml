@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: my-gateway
+spec:
+  # Select the Pod(s) of the Istio gateway.
+  # And yes, the Pods and this Gateway object can live in different namespaces unless you set the istiod PILOT_SCOPE_GATEWAY_TO_NAMESPACE environment variable to true.
+  selector:
+    istio: ingressgateway # Istio's gateway Pods are given this label by default.
+  # Accept HTTP ingress for example.com at port 80.
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - example.com
