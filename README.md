@@ -11,7 +11,7 @@ Similarly, we use a lower case "g" in "gateway" to make it clear that we're **no
 
 ## Set up Istio and its ingress gateway
 
-**1.** Install and Istio's ingress gateway
+**1.** Install Istio and Istio's ingress gateway
 
 ```bash
 istioctl install
@@ -98,3 +98,64 @@ Expected output:
 NAME                  TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
 hello-world-service   ClusterIP   10.112.6.247   <none>        80/TCP    23m
 ```
+
+## Serve the app through the ingress gateway
+
+In this section, we allow users (from the Internet) to access our "Hello, world!" app.
+The user traffic will go through the Istio ingress gateway to the "Hello, world!" `Service`.
+
+**1.** Allow ingress into the cluster for "http://example.com:80". We do this using Istio's [`Gateway`](https://istio.io/latest/docs/reference/config/networking/gateway/) object. The `Gateway` object tells the Istio ingress gateway to accept HTTP traffic at port 80 that's meant for "example.com".
+
+```bash
+kubectl apply -f gateway.yaml
+```
+
+**2.** Tell the Istio ingress gateway to send "http://example.com:80" traffic to `hello-world-service`.
+
+```bash
+kubectl apply -f virtual-service.yaml
+```
+
+**3.** Check the `EXTERNAL-IP` address of the Istio ingress gateway `Service`.
+
+```bash
+kubectl get service istio-ingressgateway -n istio-system
+```
+
+**5.** Test the "Hello, World!" app via curl. Replace `INGRESS_GATEWAY_EXTERNAL_IP` with the `EXTERNAL-IP` of the Istio ingress gateway.
+
+```
+curl -v -HHost:example.com http://INGRESS_GATEWAY_EXTERNAL_IP
+```
+
+Expected output:
+```
+*   Trying 12.345.678.1:80...
+* Connected to 12.345.678.1 (12.345.678.1) port 80 (#0)
+> GET / HTTP/1.1
+> Host:example.com
+> User-Agent: curl/7.79.1
+> Accept: */*
+>
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 200 OK
+< date: Sat, 25 Jun 2022 13:51:38 GMT
+< content-length: 79
+< content-type: text/plain; charset=utf-8
+< x-envoy-upstream-service-time: 5
+< server: istio-envoy
+<
+Hello, world!
+Version: 1.0.0
+Hostname: hello-world-deployment-559bf865f9-4r9qc
+* Connection #0 to host 12.345.678.1 left intact
+```
+
+## Access using your web browser
+
+If you would like to access the "Hello, world!" app through your web browser, you will need to trick your web browser into thinking that example.com exists at your external IP address. You can do this by adding the following line to your computer's `/etc/hosts` file. On Windows, this files exists at `c:\windows\system32\drivers\etc\hosts`.
+
+```
+INGRESS_GATEWAY_EXTERNAL_IP example.com
+```
+Replace `INGRESS_GATEWAY_EXTERNAL_IP` with the `EXTERNAL-IP` of the Istio ingress gateway.
