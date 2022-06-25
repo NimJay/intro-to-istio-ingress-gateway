@@ -2,6 +2,9 @@
 
 This repo contains sample code that introduces you to Istio's ingress gateway.
 
+![A diagram of a Kubernetes cluster containing two namespaces — "istio-system" and "default". The "istio-system" namespaces contains the Pod for the Istio ingress gateway. The "default" namespaces contains the Pods for the "Hello, world!" app.](https://github.com/NimJay/intro-to-istio-ingress-gateway/raw/main/istio-ingress-gateway-with-hello-world.png)
+
+
 ## It's "ingress", not "Ingress"
 Note that the "i" in "ingress" is lower case. This is because we want to make it clear that we're **not** referring to the Kubernetes [`Ingress`](https://kubernetes.io/docs/concepts/services-networking/ingress/) object. In fact, even though the Istio exposes a public IP address to allow ingress into the cluster, it does not use an `Ingress` object — instead it just uses a `Service` object of type, `LoadBalancer` (which your cluster will generate an external IP address for).
 
